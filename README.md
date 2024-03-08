@@ -38,8 +38,8 @@ R version 4.3.2 with the following packages installed:
 
 ## Getting help
 
-Contact the [project maintainer](emailto:emma_schillerstrom@fws.gov) for help with this repository.
+Contact the project maintainer (emma_schillerstrom\@fws.gov) for help with this repository.
 
 ## Contribute
 
-Contact the [project maintainer](emailto:emma_schillerstrom@fws.gov) for information about contributing to this repository. Submit a [GitHub Issue](https://github.com/USFWS/r7-repo-template/issues) to report a bug or request a feature or enhancement.
+Contact the project maintainer (emma_schillerstrom\@fws.gov) for information about contributing to this repository. Submit a [GitHub Issue](https://github.com/USFWS/r7-repo-template/issues) to report a bug or request a feature or enhancement.

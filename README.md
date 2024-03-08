@@ -34,7 +34,9 @@ R version 4.3.2 with the following packages installed:
 
 2.  Open `app.R` in RStudio.
 
-3.  Click 'Run App' in the upper right-hand corner of the source window.
+3.  Ensure you are connected to GlobalProtect.
+
+4.  Click 'Run App' in the upper right-hand corner of the source window.
 
 ## Getting help
 

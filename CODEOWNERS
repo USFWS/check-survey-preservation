@@ -13,5 +13,5 @@
 #---- Codeowners
 
 # Include at least one reviewer for the repository’s .github/workflows directory by adding the lines below (Uncomment them when using GitHub Actions)
-# .github/* @<maintainer>
-# .github/workflows/* @<maintainer>
+ .github/* @eschillerstrom-usfws
+ .github/workflows/* @eschillerstrom-usfws

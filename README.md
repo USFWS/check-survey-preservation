@@ -28,7 +28,7 @@ R version 4.3.2 with the following packages installed:
 
 -   shinycssloaders
 
-## Usage {#usage}
+## Usage
 
 1.  Download and unzip a copy of the repository on your computer.
 

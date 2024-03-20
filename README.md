@@ -28,15 +28,15 @@ R version 4.3.2 with the following packages installed:
 
 -   shinycssloaders
 
-## Usage {#usage}
+## Usage
 
-1.  Download and unzip a copy of the repository on your computer.
+-   Download and unzip a copy of the repository on your computer.
 
-2.  Open `app.R` in RStudio.
+-   Open `app.R` in RStudio.
 
-3.  Ensure you are connected to GlobalProtect.
+-   Ensure you are connected to GlobalProtect.
 
-4.  Click 'Run App' in the upper right-hand corner of the source window.
+-   Click 'Run App' in the upper right-hand corner of the source window.
 
 ## Getting help
 

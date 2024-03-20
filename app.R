@@ -4,6 +4,7 @@ library(stringr)
 library(shiny)
 library(shinycssloaders)
 source("functions.R")
+source("global.R")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(

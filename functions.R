@@ -137,11 +137,8 @@ getReport <- function(id, internal = TRUE){
 #' @examples
 #' getCCC("Alaska Maritime National Wildlife Refuge")
 getCCC <- function(refuge){
-  #Generate dataframe of all refuge names, cost center codes, and region numbers
-  regionList <- getRegionList()
-  
   #Return cost center code corresponding to specified refuge
-  return(regionList$costCenterCode[which(regionList$stationName == refuge)])
+  return(regionTable$costCenterCode[which(regionTable$stationName == refuge)])
 }
 
 #' Get list of refuges for a given FWS region
@@ -158,11 +155,8 @@ getRefugeList <- function(region){
     return("")
   }
   
-  #Generate dataframe of all refuge names, cost center codes, and region numbers
-  regionList <- getRegionList()
-  
   #Return list of stations for specified region
-  return(regionList$stationName[which(regionList$region == region)])
+  return(regionTable$stationName[which(regionTable$region == region)])
 }
 
 #' Get dataframe of all FWS refuge station names, their cost center code, and their region number
@@ -171,7 +165,7 @@ getRefugeList <- function(region){
 #'
 #' @examples
 #' getRegionList()
-getRegionList <- function(){
+getRegionTable <- function(){
   #Make call
   url <- paste("https://ecos.fws.gov:443/primr/refugeApi/geo.json?offset=0&max=700&order=id%2Casc")
   response <- GET(url = url, encode = "json", add_headers("Content-Type" = "application/json"), verbose())

@@ -1,0 +1,1 @@
+regionTable <<- getRegionTable()

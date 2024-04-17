@@ -7,7 +7,7 @@
 #'
 #' @examples
 #' getReport("FF07RAM000")
-getReport <- function(id, internal = TRUE){
+getReport <- function(id, internal = FALSE){
   if(length(id)==0){
     return("<i>No refuge selected</i>")
   }
@@ -76,53 +76,68 @@ getReport <- function(id, internal = TRUE){
           report <- paste(report, "<br>")
         }
         
-        #Add ServCat project title and link to the report
-        report <- paste(report, "<b>Project: </b>", json_output$bibliography$title, " <a href='https://ecos.fws.gov/ServCat/Reference/Profile/", val, "' target='_blank'>(ServCat link)</a><br>")
-        
-        #Capture product content: reference types, counts, and dates
-        if(length(json_output$products)==0 || is.na(json_output$products)){
-          #Handle case of no products
-          results <- "<i><font color='gray'>None</font></i>"
+        #Handle case of expired project reference code
+        if(length(json_output)==0){
+          report <- paste(report, "<b>Project: </b><font color='red'>Reference no longer active</font><br>")
         }else{
-          #Handle case of products present
-          products <- json_output$products[[1]]$referenceType
-          dates <- substr(json_output$products[[1]]$dateOfIssue,1,4)
-          types <- unique(json_output$products[[1]]$referenceType)
-          type_counts <- c()
-          type_dates <- c()
-          for (element in types){
-            type_counts <- append(type_counts, sum(str_count(element, products)))
-            date_set <- sort(dates[which(products == element)])
-            date_string <- ""
-            for (i in 1:length(date_set)){
-              if(length(date_set)==1){
-                date_string <- paste0("(", date_set[i], ")")
-              }else if(i==1){
-                date_string <- paste0("(", date_set[i])
-              }else if(i==length(date_set)){
-                date_string <- paste0(date_string, ", ", date_set[i], ")")
+          #Add ServCat project title and link to the report
+          report <- paste(report, "<b>Project: </b>", json_output$bibliography$title, " <a href='https://ecos.fws.gov/ServCat/Reference/Profile/", val, "' target='_blank'>(ServCat link)</a><br>")
+          
+          #Capture product content: reference types, counts, and dates
+          if(length(json_output$products)==0 || is.na(json_output$products)){
+            #Handle case of no products
+            results <- "<i><font color='gray'>None</font></i>"
+          }else{
+            #Handle case of products present
+            products <- json_output$products[[1]]$referenceType
+            dates <- substr(json_output$products[[1]]$dateOfIssue,1,4)
+            types <- unique(json_output$products[[1]]$referenceType)
+            type_counts <- c()
+            type_dates <- c()
+            #Loop through each reference type
+            for (element in types){
+              count <- sum(str_count(element, products))
+              type_counts <- append(type_counts, sum(str_count(element, products)))
+              date_set <- sort(dates[which(products == element)])
+              while(length(date_set) < count){
+                date_set <- append(date_set, "<i>No Date</i>")
+              }
+              date_string <- ""
+              #Loop through each date for that reference type
+              for (i in 1:length(date_set)){
+                if(length(date_set)==1){
+                  date_string <- paste0("(", date_set[i], ")")
+                }else if(i==1){
+                  date_string <- paste0("(", date_set[i])
+                }else if(i==length(date_set)){
+                  date_string <- paste0(date_string, ", ", date_set[i], ")")
+                }else{
+                  date_string <- paste0(date_string, ", ", date_set[i])
+                }
+              }
+              type_dates <- append(type_dates, date_string)
+            }
+            
+            #Format product info for report
+            results <- "<br>"
+            for (i in 1:length(types)){
+              if(i == 1){
+                results <- paste(results, paste(type_counts[i], "x", types[i], type_dates[i]), sep="")
               }else{
-                date_string <- paste0(date_string, ", ", date_set[i])
+                results <- paste(results, paste("<br>", type_counts[i], "x", types[i], type_dates[i]), sep="")
               }
             }
-            type_dates <- append(type_dates, date_string)
           }
           
-          results <- "<br>"
-          for (i in 1:length(types)){
-            if(i == 1){
-              results <- paste(results, paste(type_counts[i], "x", types[i], type_dates[i]), sep="")
-            }else{
-              results <- paste(results, paste("<br>", type_counts[i], "x", types[i], type_dates[i]), sep="")
-            }
-          }
+          #Add ServCat product info to report
+          report <- paste(report, "<b>Products: </b><font color='SlateBlue'>", results, "</font><br>")
         }
-        
-        #Add ServCat content to report
-        report <- paste(report, "<b>Products: </b><font color='SlateBlue'>", results, "</font><br>")
       }
     }
   }
+  
+  #Add white space buffer to end of report
+  report <- paste(report, "<br><br>")
   
   #Return combined report
   return(report)
